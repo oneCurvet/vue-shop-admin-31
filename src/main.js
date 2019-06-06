@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from "./App"
+import App from "./App.vue"
 
 //路由
 import VueRouter from "vue-router"
