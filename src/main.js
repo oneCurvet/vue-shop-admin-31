@@ -3,7 +3,8 @@ import App from "./App.vue"
 
 //路由
 import VueRouter from "vue-router"
-import Login from "./components/Login.vue"
+import Login from "./pages/Login.vue"
+import Index from "./pages/Index.vue"
 //element-ui插件
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui';
@@ -16,11 +17,16 @@ Vue.use(ElementUI);
 Vue.use(VueRouter);
 
 const routes = [{
+  path: "/",
+  component: Index
+}, {
   path: "/login",
   component: Login
 }]
 
-const router = new VueRouter({routes})
+const router = new VueRouter({
+  routes
+})
 
 new Vue({
   render: h => h(App),
