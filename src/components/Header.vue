@@ -4,17 +4,46 @@
       <div>
         <i @click="handleClickArrow" class="el-icon-back cursorPointer"></i>
       </div>
-      <div>admin 超级管理员 退出</div>
+      <div>
+        {{uname}} {{realname}}
+        <el-button @click="handleLoginOut" type="text">退出</el-button>
+      </div>
     </el-row>
   </div>
 </template>
 
 <script>
+import { setTimeout } from "timers";
 export default {
+  data() {
+    return {
+      uname: "",
+      realname: ""
+    };
+  },
   methods: {
     handleClickArrow() {
       this.$emit("clickArrow");
+    },
+    handleLoginOut() {
+      this.$axios({
+        method: "GET",
+        url: "http://localhost:8899/admin/account/logout"
+      }).then(res => {
+        // console.log(res);
+        this.$message({
+          message: res.data.message,
+          type: "success"
+        });
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 3000);
+      });
     }
+  },
+  mounted() {
+    this.uname = localStorage.getItem("uname");
+    this.realname = localStorage.getItem("realname");
   }
 };
 </script>

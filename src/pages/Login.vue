@@ -15,7 +15,7 @@
     </el-form-item>
 
     <el-form-item class="el-form-item-btn">
-      <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+      <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
       <el-button @click="resetForm('ruleForm')">重置</el-button>
     </el-form-item>
   </el-form>
@@ -26,15 +26,15 @@ export default {
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
-      }else{
-        callback()
+      } else {
+        callback();
       }
     };
     var validateUsername = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入账号"));
-      }else{
-        callback()
+      } else {
+        callback();
       }
     };
 
@@ -52,9 +52,9 @@ export default {
   methods: {
     submitForm(formName) {
       const data = {
-        uname:this.ruleForm.username,
-        upwd:this.ruleForm.pass,
-      }
+        uname: this.ruleForm.username,
+        upwd: this.ruleForm.pass
+      };
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios({
@@ -64,12 +64,16 @@ export default {
             withCredentials: true
           }).then(res => {
             console.log(res);
-            const {status,message} = res.data
-            if(status == 0){
-              this.$router.push(`/?uname=message.uname&realname=message.realname`)
+            const { status, message } = res.data;
+            if (status == 0) {
+              this.$router.push(`/`)
               // console.log(message);
-            }else{
-               this.$message.error(message);
+              var storage = window.localStorage;
+              storage.setItem("uname",message.uname)
+              storage.setItem("realname",message.realname)
+            } else {
+              this.$message.error(message);
+              
             }
           });
         }
