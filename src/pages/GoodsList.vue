@@ -15,36 +15,37 @@
     </div>
 
     <div class="table">
-      <el-row type="flex" justify="space-around">
-        <el-table
-          ref="multipleTable"
-          :data="tableData"
-          tooltip-effect="dark"
-          style="width: 100%"
-          @selection-change="handleSelectionChange"
-        >
-          <el-table-column type="selection" width="120"></el-table-column>
-          <el-table-column label="商品描述" width="280">
-            <!-- <img :src="scope.row.message[0].imgurl" alt=""> -->
-            <template slot-scope="scope">
-              <el-row type="flex" align="middle">
-                <div class="scope-row-imgurl">
-                  <!-- <img :src="scope.row.imgurl" alt> -->
-                </div>
-                {{ scope.row.title }}
-              </el-row>
-            </template>
-          </el-table-column>
-          <el-table-column prop="categoryname" label="类型" width="240"></el-table-column>
-          <el-table-column prop="sell_price" label="价格" show-overflow-tooltip></el-table-column>
-          <el-table-column label="操作">
-            <template slot-scope="scope">
-              <el-button size="mini" @click="handleEditOne(scope.row)">编辑</el-button>
-              <el-button size="mini" type="danger" @click="handleDeleteOne(scope.row)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-row>
+      <!-- <el-row type="flex" justify="space-around"> -->
+      <el-table
+        
+        ref="multipleTable"
+        :data="tableData"
+        tooltip-effect="dark"
+        style="width: 100%"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column type="selection" width="150px"></el-table-column>
+        <el-table-column label="商品描述" width="500px">
+          <!-- <img :src="scope.row.message[0].imgurl" alt=""> -->
+          <template slot-scope="scope">
+            <el-row type="flex" align="middle">
+              <div class="scope-row-imgurl">
+                <img :src="scope.row.imgurl">
+              </div>
+              {{ scope.row.title }}
+            </el-row>
+          </template>
+        </el-table-column>
+        <el-table-column prop="categoryname" label="类型" width=""></el-table-column>
+        <el-table-column prop="sell_price" label="价格" show-overflow-tooltip></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEditOne(scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="handleDeleteOne(scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- </el-row> -->
     </div>
 
     <div class="pagination">
@@ -99,21 +100,9 @@ export default {
       //   }).then(res => {
       //       console.log(res);
       //   })
+      this.$router.push("/admin/goods-add")
     },
     handleDeleteGoods() {
-      //   this.$axios({
-      //     url: `http://localhost:8899/admin/goods/del/${this.selectedGoodsID}`
-      //   }).then(res => {
-      //     // console.log(res);
-      //     const { status, message } = res.data;
-      //     if (status == 0) {
-      //       this.$message.success(message);
-      //       this.hangdleAxiosGetList();
-      //     } else {
-      //       this.$message.error(message);
-      //       this.hangdleAxiosGetList();
-      //     }
-      //   });
       this.handleEncapsulationDelete(this.selectedGoodsID);
     },
     hangdleAxiosGetList() {
@@ -144,6 +133,8 @@ export default {
     },
     handleEditOne(row) {
       console.log(row);
+      this.$router.push(`/admin/goods-edit/${row.id}`)
+
     },
     handleDeleteOne(row) {
       //   console.log(row);
@@ -167,14 +158,17 @@ export default {
 </script>
 
 <style>
-.scope-row-imgurl {
+.cell:not(.scope-row-imgurl){
+    text-align: center;
+}
+.scope-row-imgurl > img {
   width: 60px;
   height: 60px;
-  border: 1px solid #999;
   flex-shrink: 0;
 }
 .table {
   margin-top: 10px;
+  text-align: center;
 }
 .search {
   padding-top: 10px;

@@ -7,6 +7,8 @@ import Login from "./pages/Login.vue"
 import Index from "./pages/Index.vue"
 import GoodsList from "./pages/GoodsList.vue"
 import Category from "./pages/Category.vue"
+import GoodsAdd from "./pages/GoodsAdd.vue"
+import GoodsEdit from "./pages/GoodsEdit.vue"
 //element-ui插件
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui';
@@ -33,6 +35,16 @@ const routes = [{
       path: "goods-list",
       component: GoodsList,
       meta: "商品列表",
+    },
+    {
+      path: "goods-add",
+      component: GoodsAdd,
+      meta: "添加商品",
+    },
+    {
+      path: "goods-edit/:id",
+      component: GoodsEdit,
+      meta: "编辑商品",
     },
     {
       path: "category",
