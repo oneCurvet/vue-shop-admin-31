@@ -26,7 +26,7 @@
       >
         <el-table-column type="selection" width="150px"></el-table-column>
         <el-table-column label="商品描述" width="500px">
-          <!-- <img :src="scope.row.message[0].imgurl" alt=""> -->
+          <!-- <img src="" alt=""> -->
           <template slot-scope="scope">
             <el-row type="flex" align="middle">
               <div class="scope-row-imgurl">
@@ -106,6 +106,7 @@ export default {
       this.handleEncapsulationDelete(this.selectedGoodsID);
     },
     hangdleAxiosGetList() {
+
       this.$axios({
         method: "get",
         url: `http://localhost:8899/admin/goods/getlist?pageIndex=${
@@ -115,8 +116,17 @@ export default {
       }).then(res => {
         const { message, status } = res.data;
         // console.log(res);
-        this.tableData = message;
+        // this.tableData = message;
+        // console.log(this.tableData);
+        this.tableData = message.map(v => {
+          v.imgurl = `http://127.0.0.1:8899/${v.img_url}`
+          return {
+            ...v,
+          }
+        })
+
         this.total = res.data.totalcount;
+        
         //   console.log(res.data);
         //   console.log(this.total);
         //   console.log(this.tableData);

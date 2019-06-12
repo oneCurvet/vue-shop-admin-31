@@ -73,7 +73,6 @@ export default {
               storage.setItem("realname",message.realname)
             } else {
               this.$message.error(message);
-              
             }
           });
         }

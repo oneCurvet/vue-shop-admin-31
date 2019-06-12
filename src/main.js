@@ -58,6 +58,36 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to,from,next) => {
+  // console.log(to);
+  // console.log(from);
+  axios({
+    method:"get",
+    url: "http://localhost:8899/admin/account/islogin",
+    withCredentials: true
+  }).then(res => {
+    // console.log(res);
+    const {code} = res.data
+    // console.log(code);
+
+    if (to.path == "/login") {
+      if (code == "nologin") {
+        next()
+      } else {
+        next("/admin/goods-list")
+      }
+    }else{
+      if (code == "nologin"){
+        next("/login")
+      }else{
+        next()
+      }
+    }
+  })
+  
+  
+})
+
 new Vue({
   render: h => h(App),
   router

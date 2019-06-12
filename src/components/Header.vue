@@ -28,16 +28,19 @@ export default {
     handleLoginOut() {
       this.$axios({
         method: "GET",
-        url: "http://localhost:8899/admin/account/logout"
+        url: "http://localhost:8899/admin/account/logout",
+        withCredentials: true
       }).then(res => {
-        // console.log(res);
-        this.$message({
-          message: res.data.message,
-          type: "success"
-        });
-        setTimeout(() => {
-          this.$router.push("/login");
-        }, 3000);
+        console.log(res);
+        if (res.data.status == 0) {
+          this.$message({
+            message: res.data.message,
+            type: "success"
+          });
+          setTimeout(() => {
+            this.$router.push("/login");
+          }, 3000);
+        }
       });
     }
   },

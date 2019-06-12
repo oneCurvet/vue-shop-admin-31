@@ -15,9 +15,9 @@
       <el-switch v-model="form.status"></el-switch>
     </el-form-item>
 
-    <el-form-item label="是否显示">
+    <!-- <el-form-item label="是否显示">
       <el-switch v-model="form.is_show"></el-switch>
-    </el-form-item>
+    </el-form-item>-->
 
     <el-form-item label="推荐类型">
       <el-checkbox label="置顶" v-model="form.is_top"></el-checkbox>
@@ -40,7 +40,7 @@
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
       >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <img v-if="form.imgList" :src="form.imgList[0].url" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon" id="avatar-uploader-icon"></i>
       </el-upload>
     </el-form-item>
@@ -137,7 +137,7 @@ export default {
       this.$router.back();
     },
     onSubmit() {
-    //   console.log(this.$route);
+      //   console.log(this.$route);
       const { id } = this.$route.params;
       this.$axios({
         method: "POST",
@@ -147,6 +147,7 @@ export default {
       }).then(res => {
         // console.log(res);
         const { message, status } = res.data;
+        console.log(message);
         if (status == 0) {
           this.$message.success(message);
           setTimeout(() => {
@@ -174,7 +175,7 @@ export default {
       // console.log(fileList);
       this.form.fileList.push(res);
 
-      console.log(this.form.fileList);
+      // console.log(this.form.fileList);
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
@@ -212,10 +213,20 @@ export default {
     }).then(res => {
       //   console.log(res);
       const { message, status } = res.data;
-      console.log(message);
-      this.form = { ...message, category_id: +message.category_id };
+      // console.log(message);
+      this.form = {
+        ...message,
+        category_id: +message.category_id,
+        fileList: message.fileList.map(v => {
+          v.url = "http://127.0.0.1:8899" + v.shorturl;
+          return {
+            ...v
+          };
+        }),
+        
+      };
 
-      this.imageUrl = message.imgList[0].url;
+      // this.imageUrl = message.imgList[0].url;
     });
   }
 };
