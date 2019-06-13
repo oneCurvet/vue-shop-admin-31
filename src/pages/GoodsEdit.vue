@@ -161,6 +161,7 @@ export default {
     handleRemove(file, fileList) {
       //   console.log(file);
       //   console.log(fileList);
+      console.log(fileList);
       this.form.fileList = fileList;
       //   console.log(this.form.fileList);
     },

@@ -9,9 +9,13 @@ import GoodsList from "./pages/GoodsList.vue"
 import Category from "./pages/Category.vue"
 import GoodsAdd from "./pages/GoodsAdd.vue"
 import GoodsEdit from "./pages/GoodsEdit.vue"
+
 //element-ui插件
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui';
+
+// 导入仓库
+import store from "./store"
 
 //axios
 import axios from "axios"
@@ -58,6 +62,8 @@ const router = new VueRouter({
   routes
 })
 
+
+
 router.beforeEach((to,from,next) => {
   // console.log(to);
   // console.log(from);
@@ -90,5 +96,6 @@ router.beforeEach((to,from,next) => {
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')

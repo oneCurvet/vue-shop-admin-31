@@ -66,11 +66,12 @@ export default {
             console.log(res);
             const { status, message } = res.data;
             if (status == 0) {
-              this.$router.push(`/`)
-              // console.log(message);
-              var storage = window.localStorage;
-              storage.setItem("uname",message.uname)
-              storage.setItem("realname",message.realname)
+              this.$router.push(`/`);
+              
+              this.$store.commit("setUser",message);
+
+              localStorage.setItem("user",JSON.stringify(message))
+              
             } else {
               this.$message.error(message);
             }

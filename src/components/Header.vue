@@ -5,7 +5,7 @@
         <i @click="handleClickArrow" class="el-icon-back cursorPointer"></i>
       </div>
       <div>
-        {{uname}} {{realname}}
+        {{user.uname}} {{user.realname}}
         <el-button @click="handleLoginOut" type="text">退出</el-button>
       </div>
     </el-row>
@@ -17,8 +17,9 @@ import { setTimeout } from "timers";
 export default {
   data() {
     return {
-      uname: "",
-      realname: ""
+      user: {}
+      // uname: "",
+      // realname: ""
     };
   },
   methods: {
@@ -31,13 +32,14 @@ export default {
         url: "http://localhost:8899/admin/account/logout",
         withCredentials: true
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.status == 0) {
           this.$message({
             message: res.data.message,
             type: "success"
           });
           setTimeout(() => {
+            localStorage.removeItem("user")
             this.$router.push("/login");
           }, 3000);
         }
@@ -45,8 +47,9 @@ export default {
     }
   },
   mounted() {
-    this.uname = localStorage.getItem("uname");
-    this.realname = localStorage.getItem("realname");
+    
+    this.user = this.$store.state.user
+    
   }
 };
 </script>
